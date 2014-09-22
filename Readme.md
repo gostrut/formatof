@@ -1,5 +1,7 @@
 # formatof
 
+[![Build Status](https://travis-ci.org/gostrut/formatof.svg?branch=master)](https://travis-ci.org/gostrut/formatof)
+
 Validate format of
 
 ## Example
