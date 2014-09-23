@@ -22,7 +22,7 @@ func TestFormatOf(t *testing.T) {
 		{b},
 	} {
 		fields, err := val.Validates(v.i)
-		f := fields[0]
+		f := fields.Get("Email")[0]
 		assert.Nil(t, err)
 		assert.False(t, fields.Valid())
 		assert.Equal(t, "Email does not match `^\\w+@\\w+\\.[a-z]{2,4}$`", f.Error())
