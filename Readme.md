@@ -4,6 +4,10 @@
 
 Validate format of
 
+## Install
+
+    go get gopkg.in/gostrut/formatof.v1
+
 ## Example
 
     type Person struct {
@@ -11,10 +15,16 @@ Validate format of
     }
 
     val := NewValidator()
-    val.Checks("format_of", formatof.Validator)
+    val.Add("format_of", formatof.Validator)
 
     p := Person{Email: "badnotanemail"}
-    fields, err := val.Validates(p)
+    fields, err := val.Check(p)
+    if err != nil {
+      // handle error
+    }
+    if !fields.Valid() {
+      // handle invalid fields
+    }
 
 ## License
 
