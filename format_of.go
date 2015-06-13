@@ -1,33 +1,37 @@
 package formatof
 
-import "fmt"
-import "reflect"
-import "regexp"
-import "github.com/gostrut/invalid"
+import (
+	"fmt"
+	"reflect"
+	"regexp"
+
+	"gopkg.in/gostrut/strut.v1/invalid"
+)
 
 // Validator for formatof validates a string field against a regexp. Empty
 // strings will be skipped. This does not check presence of.
 // Regex must compile or an error is returned
-func Validator(name, tagStr string, vo *reflect.Value) (invalid.Field, error) {
-	if vo.Kind() != reflect.String {
-		return nil, fmt.Errorf("format_of cannot be applied to %s, it is not a string", name)
+func Validator(n, t string, v *reflect.Value) (invalid.Field, error) {
+	s, ok := v.Interface().(string)
+	if !ok {
+		return nil,
+			fmt.Errorf("format_of cannot be applied to %s, it is not a string", n)
 	}
-
-	str := vo.Interface().(string)
-	if "" == str {
+	if "" == s {
 		return nil, nil
 	}
 
-	reg, err := regexp.Compile(tagStr)
+	r, err := regexp.Compile(t)
 	if err != nil {
 		return nil, err
 	}
 
-	if !reg.MatchString(str) {
-		f := iField{
-			name:   name,
-			regStr: reg.String(),
+	if !r.MatchString(s) {
+		f := field{
+			name:   n,
+			regStr: r.String(),
 		}
+
 		return f, nil
 	}
 

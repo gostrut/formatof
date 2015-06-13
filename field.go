@@ -1,20 +1,22 @@
 package formatof
 
-import "fmt"
+import (
+	"fmt"
+)
 
-type iField struct {
+type field struct {
 	name   string
 	regStr string
 }
 
-func (f iField) Name() string {
+func (f field) Name() string {
 	return f.name
 }
 
-func (f iField) Validator() string {
+func (f field) Validator() string {
 	return "FormatOf"
 }
 
-func (f iField) Error() string {
+func (f field) Error() string {
 	return fmt.Sprintf("%s does not match `%s`", f.Name(), f.regStr)
 }
